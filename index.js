@@ -15,20 +15,26 @@ MessageBox.prototype.myAjax = function (para) {
     };
 };
 
-var messageBox = new MessageBox();
+function set(){
+    var messageBox = new MessageBox();
 
-var para = JSON.stringify({
-    userName: '大圣',
-    score: -70,
-    gameTime: '50s',
-    createTime: '2021/09/15'
-});
+    var para = JSON.stringify({
+        userName: '大圣',
+        score: -70,
+        gameTime: '50s',
+        createTime: '2021/09/15'
+    });
 
-messageBox.myAjax({
-    url: 'http://39.104.22.73:8081/ScoreCreate/foreend',
-    data: para,
-    success: function (data) {
-        // 重载英雄榜
-        console.log(data);
-    }
-});
+    console.log('jj');
+
+    messageBox.myAjax({
+        url: 'http://39.104.22.73:8081/ScoreCreate/foreend',
+        data: para,
+        success: function (data) {
+            // 重载英雄榜
+            document.getElementsByClassName('callback')[0].append(data + '<br/>');
+        }
+    });
+};
+
+document.getElementById('begin').addEventListener('click',set);
