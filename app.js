@@ -16,9 +16,11 @@ let querystring = require('querystring');
 let server = http.createServer((req, res) => {
   let pathname = url.parse(req.url).pathname,
     UrlType = pathname.split('/'),    //辨别请求是不是ajax，本应用ajax请求都有aqi标记，具体使用时需要根据情况修改此处
-    ProxyedUrl = pathname.replace(/\/api/, 'http://39.104.22.73:8888'),  //指向后后的url
     ext = path.parse(pathname).ext,
     mimeType = mime.getType(ext);
+
+  console.log('req.url');
+  console.log(req.url);
 
   if (UrlType[1] == 'api') {
     //我的前端请求接口url需要代理，url会添加api，需要将url替换并转发
@@ -29,7 +31,8 @@ let server = http.createServer((req, res) => {
 
     req.on('end', function () {
       axios.post(
-        pathname.replace(/\/api/, 'http://39.104.22.73:8888'),
+        // pathname.replace(/\/api/, 'http://39.104.22.73:8888'),
+        pathname.replace(/\/api/, 'http://localhost:8888'),
         JSON.parse(post)
       ).then(function (response) {
         res.end(JSON.stringify(response.data));
@@ -37,10 +40,15 @@ let server = http.createServer((req, res) => {
         console.log('ajax error');
       });
     });
+    console.log('走的api');
   } else if (UrlType[1] == '') {
     ReadAndResponse('index.html',res,mimeType);
+    console.log('走的index');
   } else {
     ReadAndResponse(pathname.substring(1),res,mimeType);
+    // console.log('pathname');
+    // console.log(pathname);
+    console.log('走的另外一条');
   }
 });
 

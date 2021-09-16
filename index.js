@@ -20,7 +20,7 @@ function set(){
 
     var para = JSON.stringify({
         userName: '大圣',
-        score: -70,
+        score: 1.5,
         gameTime: '50s',
         createTime: '2021/09/15'
     });
@@ -28,7 +28,9 @@ function set(){
     console.log('jj');
 
     messageBox.myAjax({
-        url: 'http://39.104.22.73:8081/ScoreCreate/foreend',
+        // url: 'http://39.104.22.73:8081/ScoreCreate/foreend',
+        // url: 'localhost:8081/ScoreCreate/foreend',
+        url: 'localhost:71/ScoreCreate/foreend',
         data: para,
         success: function (data) {
             // 重载英雄榜
@@ -38,3 +40,26 @@ function set(){
 };
 
 document.getElementById('begin').addEventListener('click',set);
+
+var messageBox = new MessageBox();
+
+var para = JSON.stringify({
+    userName: 'script',
+    score: 450,
+    gameTime: '80s',
+    createTime: '2021/09/15'
+});
+
+console.log('jj');
+
+messageBox.myAjax({
+    url: 'http://39.104.22.73:8081/ScoreCreate/foreend',
+    // url: 'localhost:8081/ScoreCreate/foreend',
+    // url: 'http://localhost:71/api/ScoreCreate/foreend',
+    url: 'http://localhost:71/api/MessageCreate/foreend',
+    data:para,
+    success: function (data) {
+        // 重载英雄榜
+        document.getElementsByClassName('callback')[0].append(data + '<br/>');
+    }
+});
